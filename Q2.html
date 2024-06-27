@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.450">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Alexandra Goh">
+
+<title>Q2</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="Q2_files/libs/clipboard/clipboard.min.js"></script>
+<script src="Q2_files/libs/quarto-html/quarto.js"></script>
+<script src="Q2_files/libs/quarto-html/popper.min.js"></script>
+<script src="Q2_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="Q2_files/libs/quarto-html/anchor.min.js"></script>
+<link href="Q2_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="Q2_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="Q2_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="Q2_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="Q2_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+
+
+</head>
+
+<body class="fullcontent">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Q2</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Alexandra Goh </p>
+          </div>
+  </div>
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<section id="exercise-2" class="level2">
+<h2 class="anchored" data-anchor-id="exercise-2">Exercise 2</h2>
+<p>The term “Barbenheimer” began on social media before the simultaneous theatrical release of two blockbuster films, Barbie and Oppenheimer, on July 21, 2023. This question asks you to explore data on movies released in 2023, not just these two. The data was compiled from https://datasets.imdbws.com and is available for you in the file “movies_2023.rda”. (For each of the plots in d, e, f mark where Barbie and Oppenheimer fall, just for fun, and extra discussion points.)</p>
+<ol type="a">
+<li>How many movies and variables are in the data?</li>
+</ol>
+<p><strong>There are 3687 movies (as there are 3687 rows) and 30 variables (as there are 30 columns) in the data.</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="at">file=</span><span class="st">'data/movies_2023.rda'</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(movies_2023)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 3,687
+Columns: 30
+$ tconst         &lt;chr&gt; "tt0109128", "tt0122511", "tt0354964", "tt0361130", "tt…
+$ titleType      &lt;chr&gt; "movie", "movie", "movie", "movie", "movie", "movie", "…
+$ primaryTitle   &lt;chr&gt; "Washed Ashore", "The Gnomes Great Adventure", "Railway…
+$ originalTitle  &lt;chr&gt; "Angeschwemmt", "The Gnomes Great Adventure", "Tie dao …
+$ startYear      &lt;chr&gt; "2023", "2023", "2023", "2023", "2023", "2023", "2023",…
+$ runtimeMinutes &lt;chr&gt; "86", "74", "83", "67", "80", "144", "80", "82", "118",…
+$ genres         &lt;chr&gt; "Documentary", "Adventure,Animation,Comedy", "War", "Do…
+$ averageRating  &lt;dbl&gt; 7.2, 6.1, 6.2, 5.4, 2.9, 6.9, 3.9, 6.0, 6.4, 7.6, 4.9, …
+$ numVotes       &lt;dbl&gt; 29, 60, 103, 9, 224, 143261, 25, 7, 6269, 12, 224, 154,…
+$ adventure      &lt;dbl&gt; 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0…
+$ action         &lt;dbl&gt; 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0…
+$ animation      &lt;dbl&gt; 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0…
+$ biography      &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0…
+$ comedy         &lt;dbl&gt; 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1, 0, 0…
+$ crime          &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0…
+$ documentary    &lt;dbl&gt; 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0…
+$ drama          &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 1, 1, 1, 0, 0, 1, 0, 0, 1…
+$ family         &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0…
+$ fantasy        &lt;dbl&gt; 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0…
+$ history        &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0…
+$ horror         &lt;dbl&gt; 0, 0, 0, 0, 1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0…
+$ mystery        &lt;dbl&gt; 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0…
+$ musical        &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0…
+$ reality        &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0…
+$ romance        &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 1…
+$ scifi          &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0…
+$ sport          &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0…
+$ thriller       &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0…
+$ war            &lt;dbl&gt; 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0…
+$ western        &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0…</code></pre>
+</div>
+</div>
+<ol start="2" type="a">
+<li>Think about your expectations. Write these down before you make any computations or plots of the data.</li>
+</ol>
+<ul>
+<li>What genre keywords would you expect to be the most common?</li>
+</ul>
+<p><strong>‘Action’, ‘Adventure’ and ‘Animation.’</strong></p>
+<ul>
+<li>What would you expect the relationship between number of votes and ratings to be?</li>
+</ul>
+<p><strong>We would expect the relationship between number of votes and ratings to have a positive correlation. This could be attributed to majority opinion; when more people like a movie, the ratings tend to rise. As a movie gains popularity with more people watching it, accumulated word-of-mouth recommendations and positive buzz can lead to higher ratings. Therefore, a higher number of favorable reviews drives up the overall rating.</strong></p>
+<ul>
+<li>What do you think the relationship between genre keyword and ratings might be? (What genre would have the top rating and which would have the lowest?)</li>
+</ul>
+<p><strong>The relationship between genre keyword and ratings can vary based on audience preferences, individual movie quality and many other factors. However, based on initial guess, we would expect that ‘Science Fiction’, ‘Drama’, ‘Animation’ and ‘Action’ movies have the top ratings whereas movies in ‘Romance’, ‘Comedy’ and ‘Horror’ genres are more likely to have the lowest ratings.</strong></p>
+<ul>
+<li>Would you expect a relationship between run time and rating to be?</li>
+</ul>
+<p><strong>We would expect the relationship between movie run time and ratings to be positive as well. For instance, movies like ‘Lord of the Rings’, ‘Harry Potter’ and ‘Oppenheimer’ are highly rated despite having run times of over three hours. Possible reasons could be longer movies tend to offer more opportunities for complex storytelling and in-depth character development, which often leads to better audience engagement and higher ratings.</strong></p>
+<ol start="3" type="a">
+<li>Make a bar chart of the genre key words (<code>adventure</code> to <code>western</code>), and summarise the distribution.</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>movies_2023_sep <span class="ot">&lt;-</span> movies_2023 <span class="sc">%&gt;%</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">separate_rows</span>(genres, <span class="at">sep =</span> <span class="st">","</span>)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>genre_counts <span class="ot">&lt;-</span> <span class="fu">table</span>(movies_2023_sep<span class="sc">$</span>genres)</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> <span class="fu">data.frame</span>(<span class="at">genres =</span> <span class="fu">names</span>(genre_counts), </span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>                         <span class="at">count =</span> <span class="fu">as.numeric</span>(genre_counts)), </span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">reorder</span>(genres, count), <span class="at">y =</span> count)) <span class="sc">+</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">fill =</span> scales<span class="sc">::</span><span class="fu">viridis_pal</span>()(<span class="fu">length</span>(genre_counts))) <span class="sc">+</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Number of Movies Released in 2023"</span>, </span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Genre"</span>, </span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Number of movies"</span>) <span class="sc">+</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.y =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> <span class="dv">0</span>)) <span class="sc">+</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Q2_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p><strong>Based on the bar chart above, we can see that ‘Drama’ was the most prevalent genre with the highest number of movie releases in 2023 (approximately 1500+ movies). Other modal categories include ‘Comedy’, ‘Documentary’ and ‘Thriller’, with all falling within the 500 to 1000 range. In contrast, ‘News’, ‘Reality-TV’, ‘Western’, ‘Musical’ and ‘War’ genres had the least number of movies released in 2023, each contributing only 40 films or fewer.</strong></p>
+<p><strong>Yet, it should also be considered that movies often belong to multiple genres. The numbers presented represent the count of movies within each genre category and may not sum up to the total number of movies released due to overlapping genres. Hence, the count values in the bar chart should not be used to calculate the overall total number of movies released in 2023.</strong></p>
+<p><strong>Overall, we can say that the distribution is unimodal. Due to its single prominent peak, ‘Drama’ appears to be the dominant genre in terms of number of movie releases in 2023, making it the mode of the distribution.</strong></p>
+<ol start="4" type="a">
+<li>Plot the average rating by genre, in the best way that you can. Describe the distribution, and what you learn about ratings and genre.</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>palette_set1 <span class="ot">&lt;-</span> <span class="fu">brewer.pal</span>(<span class="dv">9</span>, <span class="st">"Set1"</span>)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>palette_set2 <span class="ot">&lt;-</span> <span class="fu">brewer.pal</span>(<span class="dv">2</span>, <span class="st">"Set2"</span>)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>palette_set3 <span class="ot">&lt;-</span> <span class="fu">brewer.pal</span>(<span class="dv">12</span>, <span class="st">"Set3"</span>)</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>custom_palette <span class="ot">&lt;-</span> <span class="fu">c</span>(palette_set1, palette_set2, palette_set3)</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(movies_2023_sep, <span class="fu">aes</span>(<span class="at">x =</span> genres, <span class="at">y =</span> averageRating, <span class="at">fill =</span> genres)) <span class="sc">+</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Distribution of Average Ratings by Genre"</span>,</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Genre"</span>,</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Average Rating"</span>) <span class="sc">+</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">45</span>, <span class="at">hjust =</span> <span class="dv">1</span>)) <span class="sc">+</span></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> custom_palette)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Q2_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p><strong>The boxplot distribution of average ratings by genre reveals substantial variability in audience preferences. Firstly, genres such as ‘Biography’, ‘Documentary’, ‘Music’, and ‘Musical’ exhibit high median ratings, indicating that movies in these categories are often well-received by viewers. However, it’s important to note that these genres also tend to have fewer movie releases (as observed in the previous bar chart) which may potentially contribute to their elevated median ratings; except for ‘Documentary’, which maintains a high average rating despite a notable number of releases. Conversely, genres like ‘Action’, ‘Horror’, ‘Sci-Fi’, and ‘Western’ display lower median ratings, indicating that movies within these genres tend to receive less favorable reviews.</strong></p>
+<p><strong>In terms of spread, genres like ‘Horror’, ‘Sci-Fi’, ‘Thriller’, ‘War’, and ‘Western’ exhibit taller boxes, reflecting higher variability in ratings; this means that audience opinions within these genres vary widely. On the other hand, genres like ‘Biography’, ‘Documentary’, ‘History’, ‘Music’, ‘Reality-TV’, and ‘Sport’ showcase shorter boxes, suggesting more consistent ratings within these genres. ‘Comedy’, ‘Documentary’, and ‘Drama’ genres also have the most outliers, primarily on the lower ratings end, indicating occasional exceptions in audience reception.</strong></p>
+<p><strong>Lastly, some genres such as ‘Action’, ‘Biography’, ‘Crime’, and ‘Sci-Fi’ exhibit positive skewness, implying that while some movies within these genres may receive relatively high ratings, a significant portion of movies might receive lower ratings. Meanwhile, left skewness in genres like ‘Adventure’, ‘Animation’, ‘Musical’, ‘War’, and ‘Western’ suggests that a majority of movies within these genres tend to receive higher ratings, with fewer movies receiving lower ratings. The left-skewed distribution indicates a positive sentiment from audiences for a majority of movies in these genres.</strong></p>
+<p><strong>To conclude, there are some surprising discoveries. For instance, we initially expected ‘Science Fiction’, ‘Drama’, ‘Animation’ and ‘Action’ movies to have the top ratings. Yet, movies within the ‘Action’ and ‘Sci-Fi’ genres appear to receive relatively low ratings instead. Surprisingly, ‘Comedy’ and ‘Romance’ movies display higher median ratings compared to ‘Action’ and ‘Sci-Fi’. This was different from what we originally predicted, where ‘Romance’ and ‘Comedy’ were thought to be the lowest-rated genres.</strong></p>
+<ol start="5" type="a">
+<li>Plot ratings and number of votes, being careful as to which axis each should be plotted on. Summarise the distribution and what you learn.</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> movies_2023, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">log</span>(numVotes), <span class="at">y =</span> averageRating)) <span class="sc">+</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Relationship between Number of Votes vs. Ratings"</span>,</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"log (Number of Votes)"</span>,</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Average Rating"</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Q2_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p><strong>The scatterplot depicts the relationship between the number of votes (independent variable) and average ratings (observed variable). Due to its wide range of values, we use a log scale for the number of votes to make the distribution of data points more visible. Hence, the x-axis represents logarithm of the number of votes.</strong></p>
+<p><strong>From the plot, there appears to be a discernible but relatively weak relationship between the logarithm of the number of votes and average ratings. The data points are scattered quite variably around the trendline, suggesting that there’s considerable variation. The plot also exhibits a slightly curved shape, indicating a non-linear association between these variables. Notably, there are a few outliers where despite a higher number of votes, the average ratings remain relatively high. One interesting observation is the L-shape on the left-hand side of the plot, signifying that even with a consistent number of votes, there’s variability in average ratings, implying that factors beyond the number of votes influence audience evaluations of movies.</strong></p>
+<p><strong>Therefore, we can conclude that the scatterplot suggests a weak negative correlation between the number of votes and movie ratings; as the number of votes increases, average ratings tend to be slightly lower on average. However, the large variability and non-linear shape of the plot makes it challenging to draw any strong conclusions about the relationship. In summary, the relationship between the number of votes and ratings is complex and is most likely influenced by various other factors.</strong></p>
+<ol start="6" type="a">
+<li>Make appropriate plots to explore the relationship of run time against ratings.</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>movies_2023 <span class="ot">&lt;-</span> movies_2023 <span class="sc">%&gt;%</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">runtimeMinutes =</span> <span class="fu">as.numeric</span>(runtimeMinutes),  </span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">runtime_bins =</span> <span class="fu">cut</span>(runtimeMinutes, <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">300</span>, <span class="at">by =</span> <span class="dv">15</span>)))</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> movies_2023, </span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> runtime_bins, <span class="at">y =</span> averageRating, <span class="at">fill =</span> runtime_bins)) <span class="sc">+</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">"summary"</span>, <span class="at">fun =</span> <span class="st">"mean"</span>) <span class="sc">+</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Bar Chart of Average Ratings vs. Movie Runtime"</span>,</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Runtime (Minutes)"</span>,</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Average Rating"</span></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">45</span>, <span class="at">hjust =</span> <span class="dv">1</span>)) <span class="sc">+</span></span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_viridis_d</span>(<span class="at">option =</span> <span class="st">"D"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Q2_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="672"></p>
+</div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> movies_2023, <span class="fu">aes</span>(<span class="at">x =</span> runtimeMinutes, <span class="at">y =</span> averageRating)) <span class="sc">+</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>, <span class="at">se =</span> <span class="cn">FALSE</span>, <span class="at">color =</span> <span class="st">"red"</span>) <span class="sc">+</span>  </span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Regression Scatter Plot of Ratings vs. Runtime"</span>,</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Runtime (Minutes)"</span>,</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Average Rating"</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Q2_files/figure-html/unnamed-chunk-6-2.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p><strong>To explore the relationship between movie runtimes and average ratings, we have chosen to use both a bar chart and a regression scatter plot.</strong></p>
+<p><strong>The bar chart above demonstrates that the longer a movie’s runtime, the more likely it would receive higher ratings on average. However, this upward trend in movie ratings is not particularly steep as reflected in the regression scatter plot where the line is relatively flat. This suggests little to no change in the average ratings as movie runtime increases. Additionally, the scatter plot shows a somewhat scattered distribution of data points, hinting that this relationship is not strongly pronounced.</strong></p>
+<p><strong>While longer runtimes may lead to higher ratings on average, there appears to be a limit to this effect. Viewer attention and appreciation for a movie might have a threshold, beyond which longer movies may not significantly improve their ratings. This aligns with the fact that viewers may have limited patience for excessively long films.</strong></p>
+<p><strong>Other plots that we initially tried included creating separate histograms for different runtime categories to visualize the distribution of ratings within each category. Average ratings would be on the x-axis of each histogram whereas the frequency/count of movies with those ratings within the respective runtime category would be on the y-axis. However, we’ve decided to use a bar chart instead of separate histograms as this enables us to easily and quickly compare the average ratings across different runtime categories (i.e.&nbsp;better comparative analysis).</strong></p>
+<p><strong>We also tried using a boxplot/violin plot; however, a bar chart seemed more suitable in this context as our main focus was on understanding the distribution of a categorical variable, which is movie runtime categorized into discrete bins of runtime in minutes. By using a bar chart, we can easily compare the average ratings within these discrete categories. It also provides a more clear and straightforward representation of the data, making it easy for us to understand the relationship between movie runtime and average ratings at a glance. On the other hand, while boxplots/violin plots did provide more detailed information about the data distribution (e.g.&nbsp;presence of outliers, skewness, spread), emphasizing these data distribution details might have distracted us from achieving our primary goal of conducting a comparative analysis of average ratings across distinct movie runtime categories instead.</strong></p>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

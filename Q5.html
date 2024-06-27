@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.450">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Alexandra Goh">
+
+<title>Q5</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="Q5_files/libs/clipboard/clipboard.min.js"></script>
+<script src="Q5_files/libs/quarto-html/quarto.js"></script>
+<script src="Q5_files/libs/quarto-html/popper.min.js"></script>
+<script src="Q5_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="Q5_files/libs/quarto-html/anchor.min.js"></script>
+<link href="Q5_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="Q5_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="Q5_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="Q5_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="Q5_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+</head>
+
+<body class="fullcontent">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Q5</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Alexandra Goh </p>
+          </div>
+  </div>
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<section id="exercise-5" class="level2">
+<h2 class="anchored" data-anchor-id="exercise-5">Exercise 5</h2>
+<p>For each of the following code fragments, write down was a potentially useful null hypothesis and null generating mechanism would be.</p>
+<ol type="a">
+<li><code>cl</code> is categorical and <code>x1</code> is numeric.</li>
+</ol>
+<pre><code>ggplot(data) + 
+  geom_boxplot(aes(x=cl, y=x1))</code></pre>
+<p><strong>Null Hypothesis (<span class="math inline">\(H_0\)</span>):</strong> There is no difference in the distribution of x1 between levels of cl.</p>
+<p><strong>Null generating mechanism:</strong> Permutation testing. This would involve randomly shuffling the ‘cl’ labels while keeping the values of ‘x1’ fixed. This breaks any potential relationship between ‘cl’ and ‘x1’, thus assuming that ‘cl’ has no impact on the distribution of ‘x1’. After each permutation, we can then recalculate the test statistic and create a null distribution of these test statistics under the null hypothesis. Finally, we compare the test statistic calculated from our original data to the null distribution of test statistics. We can also calculate a p-value and if it’s smaller than our chosen significance level (typically 0.05), this suggests stronger evidence against our null hypothesis and there is a difference in the distribution of x1 between levels of cl.</p>
+<ol start="2" type="a">
+<li><code>temp</code> is the temperature of stars and is thought to have a skewed distribution.</li>
+</ol>
+<pre><code>ggplot(stars, aes(temp)) +
+  geom_histogram()</code></pre>
+<p><strong>Null Hypothesis (<span class="math inline">\(H_0\)</span>):</strong> The distribution of temperature of stars is not skewed.</p>
+<p><strong>Null generating mechanism:</strong> Permutation-based resampling. First, we can apply a transformation to our data to make it more symmetric (e.g.&nbsp;Box-Cox transformation). After data transformation, we should then create a large number of resampled datasets by randomly permuting the transformed ‘temp’ values while keeping the rest of the data and sample size fixed. For each of these resampled datasets, we then calculate a measure of skewness (i.e.&nbsp;skewness coefficient). By repeatedly calculating the skewness coefficient from these resampled datasets, we then generate a null distribution of skewness coefficients. This null distribution represents what we would expect to see if the ‘temp’ distribution were not skewed. Finally, we compare the observed skewness coefficient of our original dataset to the null distribution of skewness coefficients to assess whether the observed skewness is statistically significant.</p>
+<ol start="3" type="a">
+<li><code>rooms</code> is an integer variable, <code>perc</code> is a percentage (or count/frequency), <code>miss</code> is a logical variable indicating the value was missing or not.</li>
+</ol>
+<pre><code>ggplot(housing, aes(x=rooms, y=perc, fill = miss)) +
+  geom_col(position = "dodge")</code></pre>
+<p><strong>Null Hypothesis (<span class="math inline">\(H_0\)</span>):</strong> The percentage (or count/frequency) is the same across different numbers of rooms.</p>
+<p><strong>Null generating mechanism:</strong> Bootstrapping approach. This involves combining the data for different numbers of rooms into a single dataset, and treating all observations as if they came from the same room category. We then resample from the combined dataset with replacement to create multiple bootstrap samples, which effectively simulates new datasets by drawing observations from the observed data. After creating each bootstrap sample, we calculate the relevant statistic (e.g.&nbsp;mean percentage) from the simulated data. This process of resampling and calculating is repeated a large number of times, allowing us to generate a null distribution. Finally, we compare the statistic calculated from our actual data to the null distribution generated through the simulation. By doing so, we can determine whether the observed statistic is consistent with what would be expected if there were no true difference.</p>
+<ol start="4" type="a">
+<li><code>height</code> and <code>weight</code> are quantitative variables, <code>sport</code> is categorical.</li>
+</ol>
+<pre><code>ggplot(olympics, aes(x = height, 
+                     y = weight,  
+                     colour = sport)
+      ) +
+  geom_smooth(method = "lm", se = FALSE)</code></pre>
+<p><strong>Null Hypothesis (<span class="math inline">\(H_0\)</span>):</strong> There is no significant linear relationship between ‘height’ and ‘weight’ across different sports.</p>
+<p><strong>Null generating mechanism:</strong> Permutation-based approach. This involves randomly permuting the “sport” variable while keeping “height” and “weight” values unchanged thus effectively removing any potential association between ‘sport’ and the ‘height’ and ‘weight’ variables. For each permutation, we would then fit a linear regression model of ‘weight’ on ‘height’ using the permuted dataset, which will result in a set of regression coefficients (slopes). This set of regression coefficients represent the relationship between ‘height’ and ‘weight’ under the null hypothesis (i.e.&nbsp;no significant linear relationship between ‘height’ and ‘weight’ across sports).</p>
+<p>We then calculate the regression coefficient for our original, unpermuted dataset (i.e.&nbsp;the actual ‘olympics’ data) and compare this to the null distribution of coefficients. This involves calculating a p-value, which represents the proportion of permuted coefficients that are as extreme as or more extreme than the observed coefficient. If the p-value is small (typically below a significance level such as 0.05), this suggests that the observed linear relationship between ‘height’ and ‘weight’ across different sports is statistically significant, therefore providing evidence against the null hypothesis which we would reject.</p>
+<ol start="5" type="a">
+<li><code>.resid</code> are residuals from a linear model fit.</li>
+</ol>
+<pre><code>ggplot(housing, aes(sample = .resid)) +
+    geom_qq() +
+    geom_qq_line() </code></pre>
+<p><strong>Null Hypothesis (<span class="math inline">\(H_0\)</span>):</strong> The residuals from the sample follow a normal distribution.</p>
+<p><strong>Null generating mechanism:</strong> We can use a simulation-based approach to test the null hypothesis that the residuals from the linear model follow a normal distribution. This involves simulating residuals that are drawn from a normal distribution to compare them with the observed residuals. After fitting a linear model and obtaining the observed residuals, we generate a large number of random samples of residuals from a normal distribution with the same mean and standard deviation as the observed residuals. For each set of simulated residuals, we can then create Q-Q plots such as the one initially conducted for the observed residuals. A test statistic (e.g.&nbsp;measure of the overall deviation of points from the theoretical line) which quantifies the discrepancy between the Q-Q plot of the observed residuals and the Q-Q plots of the simulated residuals is then calculated.</p>
+<p>These steps should be repeated a large number of times to create a null distribution of test statistics under the assumption that the residuals follow a normal distribution. Finally, we compare the test statistic calculated from our observed residuals to the null distribution of test statistics. The p-value is also calculated and if it’s small (e.g.&nbsp;below a significance level of 0.05), this suggests that the observed residuals from the sample significantly deviate from a normal distribution, providing evidence to reject the null hypothesis.</p>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

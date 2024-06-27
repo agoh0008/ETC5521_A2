@@ -1,0 +1,77 @@
+---
+title: "Q5"
+author: "Alexandra Goh"
+format: html
+---
+
+## Exercise 5
+
+For each of the following code fragments, write down was a potentially useful null hypothesis and null generating mechanism would be.
+
+a. `cl` is categorical and `x1` is numeric.
+
+```
+ggplot(data) + 
+  geom_boxplot(aes(x=cl, y=x1))
+```
+
+**Null Hypothesis ($H_0$):** There is no difference in the distribution of x1 between levels of cl.
+
+**Null generating mechanism:** Permutation testing. This would involve randomly shuffling the 'cl' labels while keeping the values of 'x1' fixed. This breaks any potential relationship between 'cl' and 'x1', thus assuming that 'cl' has no impact on the distribution of 'x1'. After each permutation, we can then recalculate the test statistic and create a null distribution of these test statistics under the null hypothesis. Finally, we compare the test statistic calculated from our original data to the null distribution of test statistics. We can also calculate a p-value and if it's smaller than our chosen significance level (typically 0.05), this suggests stronger evidence against our null hypothesis and there is a difference in the distribution of x1 between levels of cl. 
+
+b. `temp` is the temperature of stars and is thought to have a skewed distribution.
+
+```
+ggplot(stars, aes(temp)) +
+  geom_histogram()
+```
+
+**Null Hypothesis ($H_0$):**  The distribution of temperature of stars is not skewed.
+
+**Null generating mechanism:** Permutation-based resampling. First, we can apply a transformation to our data to make it more symmetric (e.g. Box-Cox transformation). After data transformation, we should then create a large number of resampled datasets by randomly permuting the transformed 'temp' values while keeping the rest of the data and sample size fixed. For each of these resampled datasets, we then calculate a measure of skewness (i.e. skewness coefficient). By repeatedly calculating the skewness coefficient from these resampled datasets, we then generate a null distribution of skewness coefficients. This null distribution represents what we would expect to see if the 'temp' distribution were not skewed. Finally, we compare the observed skewness coefficient of our original dataset to the null distribution of skewness coefficients to assess whether the observed skewness is statistically significant.
+
+
+c. `rooms` is an integer variable, `perc` is a percentage (or count/frequency), `miss` is a logical variable indicating the value was missing or not. 
+
+```
+ggplot(housing, aes(x=rooms, y=perc, fill = miss)) +
+  geom_col(position = "dodge")
+```
+
+**Null Hypothesis ($H_0$):** The percentage (or count/frequency) is the same across different numbers of rooms.
+
+**Null generating mechanism:** Bootstrapping approach. This involves combining the data for different numbers of rooms into a single dataset, and treating all observations as if they came from the same room category. We then resample from the combined dataset with replacement to create multiple bootstrap samples, which effectively simulates new datasets by drawing observations from the observed data. After creating each bootstrap sample, we calculate the relevant statistic (e.g. mean percentage) from the simulated data. This process of resampling and calculating is repeated a large number of times, allowing us to generate a null distribution. Finally, we compare the statistic calculated from our actual data to the null distribution generated through the simulation. By doing so, we can determine whether the observed statistic is consistent with what would be expected if there were no true difference.
+
+
+
+d. `height` and `weight` are quantitative variables, `sport` is categorical.
+
+```
+ggplot(olympics, aes(x = height, 
+                     y = weight,  
+                     colour = sport)
+      ) +
+  geom_smooth(method = "lm", se = FALSE)
+```
+
+**Null Hypothesis ($H_0$):** There is no significant linear relationship between 'height' and 'weight' across different sports.
+
+**Null generating mechanism:** Permutation-based approach. This involves randomly permuting the "sport" variable while keeping "height" and "weight" values unchanged thus effectively removing any potential association between 'sport' and the 'height' and 'weight' variables. For each permutation, we would then fit a linear regression model of 'weight' on 'height' using the permuted dataset, which will result in a set of regression coefficients (slopes). This set of regression coefficients represent the relationship between 'height' and 'weight' under the null hypothesis (i.e. no significant linear relationship between 'height' and 'weight' across sports). 
+
+We then calculate the regression coefficient for our original, unpermuted dataset (i.e. the actual 'olympics' data) and compare this to the null distribution of coefficients. This involves calculating a p-value, which represents the proportion of permuted coefficients that are as extreme as or more extreme than the observed coefficient. If the p-value is small (typically below a significance level such as 0.05), this suggests that the observed linear relationship between 'height' and 'weight' across different sports is statistically significant, therefore providing evidence against the null hypothesis which we would reject.
+
+
+
+e. `.resid` are residuals from a linear model fit.
+
+```
+ggplot(housing, aes(sample = .resid)) +
+    geom_qq() +
+    geom_qq_line() 
+```
+
+**Null Hypothesis ($H_0$):** The residuals from the sample follow a normal distribution. 
+
+**Null generating mechanism:** We can use a simulation-based approach to test the null hypothesis that the residuals from the linear model follow a normal distribution. This involves simulating residuals that are drawn from a normal distribution to compare them with the observed residuals. After fitting a linear model and obtaining the observed residuals, we generate a large number of random samples of residuals from a normal distribution with the same mean and standard deviation as the observed residuals. For each set of simulated residuals, we can then create Q-Q plots such as the one initially conducted for the observed residuals. A test statistic (e.g. measure of the overall deviation of points from the theoretical line) which quantifies the discrepancy between the Q-Q plot of the observed residuals and the Q-Q plots of the simulated residuals is then calculated. 
+
+These steps should be repeated a large number of times to create a null distribution of test statistics under the assumption that the residuals follow a normal distribution. Finally, we compare the test statistic calculated from our observed residuals to the null distribution of test statistics. The p-value is also calculated and if it's small (e.g. below a significance level of 0.05), this suggests that the observed residuals from the sample significantly deviate from a normal distribution, providing evidence to reject the null hypothesis. 

@@ -1,0 +1,189 @@
+---
+title: "Q2"
+author: "Alexandra Goh"
+format: html
+---
+
+## Exercise 2
+
+The term "Barbenheimer" began on social media before the simultaneous theatrical release of two blockbuster films, Barbie and Oppenheimer, on July 21, 2023. This question asks you to explore data on movies released in 2023, not just these two. The data was compiled from https://datasets.imdbws.com and is available for you in the file "movies_2023.rda". (For each of the plots in d, e, f mark where Barbie and Oppenheimer fall, just for fun, and extra discussion points.)
+
+```{r, echo = FALSE, message = FALSE}
+
+library(tidyverse)
+library(dplyr)
+library(ggplot2)
+library(tidyr)
+library(viridis)
+library(RColorBrewer)
+library(gridExtra)
+
+```
+
+
+a. How many movies and variables are in the data?
+
+**There are 3687 movies (as there are 3687 rows) and 30 variables (as there are 30 columns) in the data.**
+
+```{r}
+
+load(file='data/movies_2023.rda')
+glimpse(movies_2023)
+
+```
+
+
+b. Think about your expectations. Write these down before you make any computations or plots of the data.
+
+- What genre keywords would you expect to be the most common? 
+
+**'Action', 'Adventure' and 'Animation.'**
+
+- What would you expect the relationship between number of votes and ratings to be? 
+
+**We would expect the relationship between number of votes and ratings to have a positive correlation. This could be attributed to majority opinion; when more people like a movie, the ratings tend to rise. As a movie gains popularity with more people watching it, accumulated word-of-mouth recommendations and positive buzz can lead to higher ratings. Therefore, a higher number of favorable reviews drives up the overall rating.**
+
+
+- What do you think the relationship between genre keyword and ratings might be? (What genre would have the top rating and which would have the lowest?)
+
+**The relationship between genre keyword and ratings can vary based on audience preferences, individual movie quality and many other factors. However, based on initial guess, we would expect that 'Science Fiction', 'Drama', 'Animation' and 'Action' movies have the top ratings whereas movies in 'Romance', 'Comedy' and 'Horror' genres are more likely to have the lowest ratings.**
+
+
+- Would you expect a relationship between run time and rating to be?
+
+**We would expect the relationship between movie run time and ratings to be positive as well. For instance, movies like 'Lord of the Rings', 'Harry Potter' and 'Oppenheimer' are highly rated despite having run times of over three hours. Possible reasons could be longer movies tend to offer more opportunities for complex storytelling and in-depth character development, which often leads to better audience engagement and higher ratings.**
+
+
+c. Make a bar chart of the genre key words (`adventure` to `western`), and summarise the distribution.
+
+
+```{r}
+
+movies_2023_sep <- movies_2023 %>%
+  separate_rows(genres, sep = ",")
+
+genre_counts <- table(movies_2023_sep$genres)
+
+ggplot(data = data.frame(genres = names(genre_counts), 
+                         count = as.numeric(genre_counts)), 
+       aes(x = reorder(genres, count), y = count)) +
+  geom_col(fill = scales::viridis_pal()(length(genre_counts))) +
+  labs(title = "Number of Movies Released in 2023", 
+       x = "Genre", 
+       y = "Number of movies") +
+  theme_minimal() +
+  theme(axis.text.y = element_text(hjust = 0)) +
+  coord_flip()
+
+
+```
+
+**Based on the bar chart above, we can see that 'Drama' was the most prevalent genre with the highest number of movie releases in 2023 (approximately 1500+ movies). Other modal categories include 'Comedy', 'Documentary' and 'Thriller', with all falling within the 500 to 1000 range. In contrast, 'News', 'Reality-TV', 'Western', 'Musical' and 'War' genres had the least number of movies released in 2023, each contributing only 40 films or fewer.**
+
+**Yet, it should also be considered that movies often belong to multiple genres. The numbers presented represent the count of movies within each genre category and may not sum up to the total number of movies released due to overlapping genres. Hence, the count values in the bar chart should not be used to calculate the overall total number of movies released in 2023.**
+
+**Overall, we can say that the distribution is unimodal. Due to its single prominent peak, 'Drama' appears to be the dominant genre in terms of number of movie releases in 2023, making it the mode of the distribution.** 
+
+
+d. Plot the average rating by genre, in the best way that you can. Describe the distribution, and what you learn about ratings and genre.
+
+
+```{r, warning = FALSE}
+
+
+palette_set1 <- brewer.pal(9, "Set1")
+palette_set2 <- brewer.pal(2, "Set2")
+palette_set3 <- brewer.pal(12, "Set3")
+custom_palette <- c(palette_set1, palette_set2, palette_set3)
+
+
+ggplot(movies_2023_sep, aes(x = genres, y = averageRating, fill = genres)) +
+  geom_boxplot() +
+  labs(title = "Distribution of Average Ratings by Genre",
+       x = "Genre",
+       y = "Average Rating") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+  scale_fill_manual(values = custom_palette)
+
+
+```
+**The boxplot distribution of average ratings by genre reveals substantial variability in audience preferences. Firstly, genres such as 'Biography', 'Documentary', 'Music', and 'Musical' exhibit high median ratings, indicating that movies in these categories are often well-received by viewers. However, it's important to note that these genres also tend to have fewer movie releases (as observed in the previous bar chart) which may potentially contribute to their elevated median ratings; except for 'Documentary', which maintains a high average rating despite a notable number of releases. Conversely, genres like 'Action', 'Horror', 'Sci-Fi', and 'Western' display lower median ratings, indicating that movies within these genres tend to receive less favorable reviews.**
+
+**In terms of spread, genres like 'Horror', 'Sci-Fi', 'Thriller', 'War', and 'Western' exhibit taller boxes, reflecting higher variability in ratings; this means that audience opinions within these genres vary widely. On the other hand, genres like 'Biography', 'Documentary', 'History', 'Music', 'Reality-TV', and 'Sport' showcase shorter boxes, suggesting more consistent ratings within these genres. 'Comedy', 'Documentary', and 'Drama' genres also have the most outliers, primarily on the lower ratings end, indicating occasional exceptions in audience reception.** 
+
+**Lastly, some genres such as 'Action', 'Biography', 'Crime', and 'Sci-Fi' exhibit positive skewness, implying that while some movies within these genres may receive relatively high ratings, a significant portion of movies might receive lower ratings. Meanwhile, left skewness in genres like 'Adventure', 'Animation', 'Musical', 'War', and 'Western' suggests that a majority of movies within these genres tend to receive higher ratings, with fewer movies receiving lower ratings. The left-skewed distribution indicates a positive sentiment from audiences for a majority of movies in these genres.**
+
+
+**To conclude, there are some surprising discoveries. For instance, we initially expected 'Science Fiction', 'Drama', 'Animation' and 'Action' movies to have the top ratings. Yet, movies within the 'Action' and 'Sci-Fi' genres appear to receive relatively low ratings instead. Surprisingly, 'Comedy' and 'Romance' movies display higher median ratings compared to 'Action' and 'Sci-Fi'. This was different from what we originally predicted, where 'Romance' and 'Comedy' were thought to be the lowest-rated genres.**
+
+
+e. Plot ratings and number of votes, being careful as to which axis each should be plotted on. Summarise the distribution and what you learn.
+
+
+```{r}
+
+ggplot(data = movies_2023, aes(x = log(numVotes), y = averageRating)) +
+  geom_point() +
+  labs(
+    title = "Relationship between Number of Votes vs. Ratings",
+    x = "log (Number of Votes)",
+    y = "Average Rating"
+  ) +
+  theme_minimal()
+
+```
+
+**The scatterplot depicts the relationship between the number of votes (independent variable) and average ratings (observed variable). Due to its wide range of values, we use a log scale for the number of votes to make the distribution of data points more visible. Hence, the x-axis represents logarithm of the number of votes.**
+
+**From the plot, there appears to be a discernible but relatively weak relationship between the logarithm of the number of votes and average ratings. The data points are scattered quite variably around the trendline, suggesting that there's considerable variation. The plot also exhibits a slightly curved shape, indicating a non-linear association between these variables. Notably, there are a few outliers where despite a higher number of votes, the average ratings remain relatively high. One interesting observation is the L-shape on the left-hand side of the plot, signifying that even with a consistent number of votes, there's variability in average ratings, implying that factors beyond the number of votes influence audience evaluations of movies.**
+
+**Therefore, we can conclude that the scatterplot suggests a weak negative correlation between the number of votes and movie ratings; as the number of votes increases, average ratings tend to be slightly lower on average. However, the large variability and non-linear shape of the plot makes it challenging to draw any strong conclusions about the relationship. In summary, the relationship between the number of votes and ratings is complex and is most likely influenced by various other factors.**
+
+
+
+f. Make appropriate plots to explore the relationship of run time against ratings. 
+
+
+```{r, message = FALSE}
+
+movies_2023 <- movies_2023 %>%
+  mutate(runtimeMinutes = as.numeric(runtimeMinutes),  
+         runtime_bins = cut(runtimeMinutes, breaks = seq(0, 300, by = 15)))
+
+ggplot(data = movies_2023, 
+       aes(x = runtime_bins, y = averageRating, fill = runtime_bins)) +
+  geom_bar(stat = "summary", fun = "mean") +
+  labs(
+    title = "Bar Chart of Average Ratings vs. Movie Runtime",
+    x = "Runtime (Minutes)",
+    y = "Average Rating"
+  ) +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+  scale_fill_viridis_d(option = "D")
+
+ggplot(data = movies_2023, aes(x = runtimeMinutes, y = averageRating)) +
+  geom_point() + 
+  geom_smooth(method = "lm", se = FALSE, color = "red") +  
+  labs(
+    title = "Regression Scatter Plot of Ratings vs. Runtime",
+    x = "Runtime (Minutes)",
+    y = "Average Rating"
+  ) +
+  theme_minimal()
+
+
+
+```
+
+**To explore the relationship between movie runtimes and average ratings, we have chosen to use both a bar chart and a regression scatter plot.**
+
+**The bar chart above demonstrates that the longer a movie's runtime, the more likely it would receive higher ratings on average. However, this upward trend in movie ratings is not particularly steep as reflected in the regression scatter plot where the line is relatively flat. This suggests little to no change in the average ratings as movie runtime increases. Additionally, the scatter plot shows a somewhat scattered distribution of data points, hinting that this relationship is not strongly pronounced.**
+
+**While longer runtimes may lead to higher ratings on average, there appears to be a limit to this effect. Viewer attention and appreciation for a movie might have a threshold, beyond which longer movies may not significantly improve their ratings. This aligns with the fact that viewers may have limited patience for excessively long films.**
+
+**Other plots that we initially tried included creating separate histograms for different runtime categories to visualize the distribution of ratings within each category. Average ratings would be on the x-axis of each histogram whereas the frequency/count of movies with those ratings within the respective runtime category would be on the y-axis. However, we've decided to use a bar chart instead of separate histograms as this enables us to easily and quickly compare the average ratings across different runtime categories (i.e. better comparative analysis).**
+
+**We also tried using a boxplot/violin plot; however, a bar chart seemed more suitable in this context as our main focus was on understanding the distribution of a categorical variable, which is movie runtime categorized into discrete bins of runtime in minutes. By using a bar chart, we can easily compare the average ratings within these discrete categories. It also provides a more clear and straightforward representation of the data, making it easy for us to understand the relationship between movie runtime and average ratings at a glance. On the other hand, while boxplots/violin plots did provide more detailed information about the data distribution (e.g. presence of outliers, skewness, spread), emphasizing these data distribution details might have distracted us from achieving our primary goal of conducting a comparative analysis of average ratings across distinct movie runtime categories instead.**
+
